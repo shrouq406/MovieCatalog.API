@@ -1,23 +1,28 @@
 # 🎬 Movie Catalog API
 
-A RESTful Web API built with **ASP.NET Core Web API**, **Entity Framework Core**, and **SQL Server** for managing movie categories and movies.
+A RESTful Web API built with ASP.NET Core Web API, Entity Framework Core, SQL Server, and ASP.NET Core Identity for managing movie categories, movies, users, and roles.
 
 This project demonstrates:
+
 - CRUD Operations
 - Entity Framework Core Code First
 - DTO Pattern
 - Data Validation using Data Annotations
+- Authentication & Authorization
+- ASP.NET Core Identity
+- Role Management
 - REST API Best Practices
 - Swagger Documentation
 - Postman Testing
 
 ---
 
-## 🚀 Technologies Used
+# 🚀 Technologies Used
 
 - ASP.NET Core Web API
 - Entity Framework Core
 - SQL Server
+- ASP.NET Core Identity
 - LINQ
 - Swagger / OpenAPI
 - Postman
@@ -25,12 +30,15 @@ This project demonstrates:
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
 ```text
 MovieCatalog.API
 │
 ├── Controllers
+│   ├── AccountController.cs
+│   ├── UserController.cs
+│   ├── RolesController.cs
 │   ├── CategoriesController.cs
 │   └── MoviesController.cs
 │
@@ -42,11 +50,18 @@ MovieCatalog.API
 │   └── Movie.cs
 │
 ├── DTOs
-│   ├── CategoryCreateDto.cs
-│   ├── CategoryReadDto.cs
-│   ├── MovieCreateDto.cs
-│   ├── MovieReadDto.cs
-│   └── MovieUpdateDto.cs
+│   ├── AccountDto
+│   │   ├── LoginDto.cs
+│   │   └── RegisterDto.cs
+│   │
+│   ├── CategoryDto
+│   │   ├── CategoryCreateDto.cs
+│   │   └── CategoryReadDto.cs
+│   │
+│   └── MovieDto
+│       ├── MovieCreateDto.cs
+│       ├── MovieReadDto.cs
+│       └── MovieUpdateDto.cs
 │
 ├── Migrations
 │
@@ -57,17 +72,17 @@ MovieCatalog.API
 
 ---
 
-## 🗄 Database Design
+# 🗄 Database Design
 
-### Category
+## Category
 
 | Property | Type |
 |-----------|--------|
 | Id | int |
 | Name | string |
-| Movies | ICollection<Movie> |
+| Movies | ICollection |
 
-### Movie
+## Movie
 
 | Property | Type |
 |-----------|--------|
@@ -81,9 +96,9 @@ MovieCatalog.API
 
 ---
 
-## 🔗 Relationship
+# 🔗 Relationship
 
-### One-to-Many
+One-to-Many
 
 A Category can contain multiple Movies.
 
@@ -98,15 +113,15 @@ Category
 
 ---
 
-## 📋 Validation Rules
+# 📋 Validation Rules
 
-### Category
+## Category
 
 | Property | Validation |
 |-----------|------------|
 | Name | Required, MaxLength(100) |
 
-### Movie
+## Movie
 
 | Property | Validation |
 |-----------|------------|
@@ -117,9 +132,9 @@ Category
 
 ---
 
-## 📦 DTOs
+# 📦 DTOs
 
-### CategoryReadDto
+## CategoryReadDto
 
 ```csharp
 public class CategoryReadDto
@@ -129,7 +144,7 @@ public class CategoryReadDto
 }
 ```
 
-### CategoryCreateDto
+## CategoryCreateDto
 
 ```csharp
 public class CategoryCreateDto
@@ -138,7 +153,7 @@ public class CategoryCreateDto
 }
 ```
 
-### MovieReadDto
+## MovieReadDto
 
 ```csharp
 public class MovieReadDto
@@ -150,7 +165,7 @@ public class MovieReadDto
 }
 ```
 
-### MovieCreateDto
+## MovieCreateDto
 
 ```csharp
 public class MovieCreateDto
@@ -163,7 +178,7 @@ public class MovieCreateDto
 }
 ```
 
-### MovieUpdateDto
+## MovieUpdateDto
 
 ```csharp
 public class MovieUpdateDto : MovieCreateDto
@@ -173,9 +188,45 @@ public class MovieUpdateDto : MovieCreateDto
 
 ---
 
-## 🌐 API Endpoints
+# 🔐 Authentication & Authorization
 
-### Categories
+The API supports authentication and authorization using ASP.NET Core Identity.
+
+### Features
+
+- User Registration
+- User Login
+- Role Management
+- Secure Password Hashing
+- Authentication using Identity
+- Authorization using Roles
+
+---
+
+# 👥 Roles
+
+The application supports:
+
+- Admin
+- User
+
+### Admin Permissions
+
+- Manage Categories
+- Manage Movies
+- Manage Roles
+- Manage Users
+
+### User Permissions
+
+- View Categories
+- View Movies
+
+---
+
+# 🌐 API Endpoints
+
+## Categories
 
 | Method | Endpoint | Description |
 |----------|----------|-------------|
@@ -187,7 +238,7 @@ public class MovieUpdateDto : MovieCreateDto
 
 ---
 
-### Movies
+## Movies
 
 | Method | Endpoint | Description |
 |----------|----------|-------------|
@@ -199,7 +250,35 @@ public class MovieUpdateDto : MovieCreateDto
 
 ---
 
-## ✅ HTTP Status Codes
+## Account
+
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| POST | /api/account/register | Register New User |
+| POST | /api/account/login | Login User |
+
+---
+
+## Roles
+
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| GET | /api/roles | Get All Roles |
+| POST | /api/roles | Create New Role |
+| POST | /api/roles/assign-role | Assign Role To User |
+
+---
+
+## Users
+
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| GET | /api/user | Get All Users |
+| GET | /api/user/{id} | Get User By Id |
+
+---
+
+# ✅ HTTP Status Codes
 
 | Operation | Status Code |
 |------------|------------|
@@ -212,7 +291,7 @@ public class MovieUpdateDto : MovieCreateDto
 
 ---
 
-## 🔄 Entity to DTO Mapping
+# 🔄 Entity to DTO Mapping
 
 Entity objects are never returned directly.
 
@@ -233,7 +312,7 @@ var movies = _context.Movies
 
 ---
 
-## 🧰 Entity Framework Core
+# 🧰 Entity Framework Core
 
 ### Create Migration
 
@@ -249,7 +328,7 @@ Update-Database
 
 ---
 
-## ⚙ Connection String
+# ⚙ Connection String
 
 ```json
 "ConnectionStrings": {
@@ -260,7 +339,7 @@ Update-Database
 
 ---
 
-## 📖 Swagger
+# 📖 Swagger
 
 Swagger is enabled for API documentation and endpoint testing.
 
@@ -272,7 +351,7 @@ https://localhost:{port}/swagger
 
 ---
 
-## 🧪 Postman Testing
+# 🧪 Postman Testing
 
 All endpoints were tested using:
 
@@ -283,22 +362,41 @@ The Postman collection is included in the repository.
 
 ---
 
-## 🎯 Features
+# 🎯 Features
 
-- RESTful API Design
-- Entity Framework Core Code First
-- SQL Server Integration
-- DTO Pattern
-- Data Validation
-- LINQ Queries
-- Swagger Documentation
-- Postman Testing
-- Proper HTTP Status Codes
-- Clean Architecture Structure
+✔ RESTful API Design
+
+✔ Entity Framework Core Code First
+
+✔ SQL Server Integration
+
+✔ DTO Pattern
+
+✔ Data Validation
+
+✔ LINQ Queries
+
+✔ Swagger Documentation
+
+✔ Postman Testing
+
+✔ Authentication using ASP.NET Core Identity
+
+✔ User Registration & Login
+
+✔ Role Management
+
+✔ Role Assignment
+
+✔ Authorization Support
+
+✔ Proper HTTP Status Codes
+
+✔ Clean Architecture Structure
 
 ---
 
-## ⭐ Bonus Implemented
+# ⭐ Bonus Implemented
 
 ✔ Return CategoryName inside MovieReadDto
 
@@ -308,18 +406,15 @@ The Postman collection is included in the repository.
 
 ✔ Entity-to-DTO mapping using Select()
 
----
+✔ ASP.NET Core Identity Integration
 
-## 🚫 Not Included
-
-This assignment intentionally stops before:
-
-- Authentication
-- Authorization
-- ASP.NET Core Identity
-- JWT Tokens
+✔ User & Role Management
 
 ---
 
-## 👨‍💻 Author
-Shrouq Ramadan
+# 👨‍💻 Author
+
+**Shrouq Ramadan**
+
+Faculty of Science – Mathematics Department  
+Suez Canal University
