@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MovieCatalog.API.DTO
+namespace MovieCatalog.API.DTO.CategoryDto
 {
-    public class CategoryCreateDto
+    public class CategoryCreateDto //Data transfer object
     {
         [Required]
         [MaxLength(100)]

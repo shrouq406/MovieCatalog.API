@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MovieCatalog.API.DTO;
+using MovieCatalog.API.DTO.MovieDto;
 using MovieCatalog.API.Models;
 
 namespace MovieCatalog.API.Controllers
