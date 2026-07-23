@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieCatalog.API.DTO.MovieDto;
@@ -8,6 +9,7 @@ namespace MovieCatalog.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize (Roles = "User")]
     public class MoviesControllerDto : ControllerBase
     {
         private readonly AppDbContext _context;

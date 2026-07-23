@@ -9,7 +9,7 @@ namespace MovieCatalog.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     public class CategoriesControllerDto : ControllerBase
     {
         private readonly AppDbContext _context;
