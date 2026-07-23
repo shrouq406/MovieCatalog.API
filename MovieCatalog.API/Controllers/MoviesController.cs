@@ -6,10 +6,9 @@ using MovieCatalog.API.Models;
 
 namespace MovieCatalog.API.Controllers
 {
+    [Authorize(Roles = "User")]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
-
     public class MoviesController : ControllerBase
     {
         private readonly AppDbContext _context;
