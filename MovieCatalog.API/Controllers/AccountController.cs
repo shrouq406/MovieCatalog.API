@@ -66,12 +66,12 @@ namespace MovieCatalog.API.Controllers
             }
 
             //generate JWT token
-            var token = GenerateJwtToken(user);
+            var token = await GenerateJwtToken(user);
             return Ok(new { Token=token });
         }
 
 
-        private string GenerateJwtToken(ApplicationUser user)
+        private async  Task<string> GenerateJwtToken(ApplicationUser user)
         {
             var claims = new List<Claim>
             {
@@ -80,6 +80,13 @@ namespace MovieCatalog.API.Controllers
                 new Claim("Email",user.Email),
                 new Claim("Hobby",user.Hobby)
             };
+
+            var roles=await _UserManager .GetRolesAsync(user);
+
+            foreach(var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
